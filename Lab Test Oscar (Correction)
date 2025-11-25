@@ -70,7 +70,7 @@ if (PromocodeResponse == 'Y' || 'y') {
 		finalTotal -= PromoDiscount;
 	}
 
- cout << fixed << setprecision(2);
+ 	cout << fixed << setprecision(2);
 	cout << "\n----------------------------------- BOOKING SUMARY -----------------------------\n";
 	cout << "\n Price Per Night: RM " << PricePerNight;
 	cout << "\n Nights Stayed: " << numNights;
@@ -80,6 +80,7 @@ if (PromocodeResponse == 'Y' || 'y') {
 
 	if (PromocodeResponse == 'Y' || 'y') {
 		double PromoDiscount = (PricePerNight * numNights * (discountRate * 100)) * PromoDiscountRate;
+ 	cout << fixed << setprecision(2);
 		cout << "\n Promo DISCOUNT (10.00%): RM" << PromoDiscount;
 
 		cout << "\n Final Total: RM"<< finalTotal;
