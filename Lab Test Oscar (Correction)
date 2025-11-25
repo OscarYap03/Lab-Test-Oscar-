@@ -32,7 +32,7 @@ int main() {
 		cout << "Invalid input! Please Try Agian.\n";
 		return 0;
 	}
-	std::setprecision;
+
 	switch (roomType) {
 	case 1: PricePerNight = 150.00; cout << "You selected Standard Room.\n";
 		break;
@@ -62,7 +62,6 @@ int main() {
 	cin>> PromocodeResponse;
 
 	//calculate discount 
-	std::setprecision;
 	discountAmount = subtotal * discountRate;
 	finalTotal = subtotal - discountAmount;
 if (PromocodeResponse == 'Y' || 'y') {
@@ -86,7 +85,6 @@ if (PromocodeResponse == 'Y' || 'y') {
 		cout << "\n Final Total: RM"<< finalTotal;
 		cout << "\n-----------------------------------------------------------------------------------\n";
 	}
-	std::setprecision;
 	if (finalTotal>= 1200.00) {
 		cout << "VIP customer: You are eligible for free airport pickup!\n";
 	}
