@@ -71,7 +71,7 @@ if (PromocodeResponse == 'Y' || 'y') {
 		finalTotal -= PromoDiscount;
 	}
 
-std::setprecision;
+ cout << fixed << setprecision(2);
 	cout << "\n----------------------------------- BOOKING SUMARY -----------------------------\n";
 	cout << "\n Price Per Night: RM " << PricePerNight;
 	cout << "\n Nights Stayed: " << numNights;
