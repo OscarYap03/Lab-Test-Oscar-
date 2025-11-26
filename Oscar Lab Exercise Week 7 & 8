@@ -1,0 +1,118 @@
+#include<iostream>
+#include<iomanip>
+using namespace std;
+
+double getPrice(int roomType) {
+    switch (roomType) {
+        case 1: return 150.00;
+        case 2: return 200.00;
+        case 3: return 300.00;
+        default: return 0.0;
+    }
+}
+
+double calculateDiscount(double subtotal, int numNights) {
+    double discountRate = 0;
+    if (numNights >= 1 && numNights <= 2) {
+        discountRate = 0.00; // No Discount
+    } else if (numNights >= 3 && numNights <= 5) {
+        discountRate = 0.05; // 5% discount
+    } else if (numNights > 5) {
+        discountRate = 0.10; // 10% discount
+    }
+    return subtotal * discountRate;
+}
+
+void computeAmounts(double PricePerNight, int numNights, double &subtotal, double &discountAmount, double &finalTotal) {
+    subtotal = PricePerNight * numNights;
+    discountAmount = calculateDiscount(subtotal, numNights);
+    finalTotal = subtotal - discountAmount;
+}
+
+double applyPromo(double finalTotal, char PromocodeResponse) {
+    if (PromocodeResponse == 'Y' || PromocodeResponse == 'y') {
+        double PromoDiscountRate = 0.10;
+        return finalTotal * PromoDiscountRate;
+    }
+    return 0.0;
+}
+
+void displayMessage(double finalTotal) {
+    if (finalTotal >= 1200.00) {
+        cout << "VIP customer: You are eligible for free airport pickup!\n";
+    } else if (finalTotal <= 300.00) {
+        cout << "Enjoy your vacation.\n";
+    } else {
+        cout << "Thank You for booking with FTMK GRAND HOTEL.\n";
+    }
+}
+
+void displaySummary(double PricePerNight, int numNights, double subtotal, double discountAmount, double PromoDiscount, double finalTotal) {
+    cout << fixed << setprecision(2);
+    cout << "\n----------------------------------- BOOKING SUMMARY -----------------------------\n";
+    cout << "\n Price Per Night: RM " << PricePerNight;
+    cout << "\n Nights Stayed: " << numNights;
+    cout << "\n Subtotal :RM " << subtotal;
+    cout << "\n Discount: RM " << discountAmount;
+    if (PromoDiscount > 0) {
+        cout << "\n Promo DISCOUNT (10.00%): RM " << PromoDiscount;
+    }
+    cout << "\n Final Total: RM " << finalTotal;
+    cout << "\n-----------------------------------------------------------------------------------\n";
+}
+
+int main() {
+    char continueBooking;
+    do {
+        int roomType;
+        int numNights;
+        char PromocodeResponse;
+        double PricePerNight = 0;
+        double subtotal;
+        double discountAmount = 0;
+        double finalTotal;
+
+        cout << "=========================================\n";
+        cout << " FTMK GRAND HOTEL BOOKING SYSTEM \n";
+        cout << "=========================================\n";
+        cout << "1. Standard Room - RM 150.00 per night\n";
+        cout << "2. Deluxe Room - RM 200.00 per night\n";
+        cout << "3. Suite Room - RM 300.00 per night\n";
+        cout << "Please Enter Room Type (1-3): ";
+        cin >> roomType;
+
+        if (roomType < 1 || roomType > 3) {
+            cout << "Invalid input! Please Try Again.\n";
+            return 0;
+        }
+
+        cout << "Please Enter Number Of Nights: ";
+        cin >> numNights;
+
+        if (numNights <= 0) {
+            cout << "Invalid input! Please Try Again.\n";
+            return 0;
+        }
+
+        PricePerNight = getPrice(roomType);
+        cout << "You selected " << (roomType == 1 ? "Standard Room." : roomType == 2 ? "Deluxe Room." : "Suite Room.") << endl;
+
+        computeAmounts(PricePerNight, numNights, subtotal, discountAmount, finalTotal);
+
+        cout << "\n Do you have a Promo Code? (Y/N): ";
+        cin >> PromocodeResponse;
+
+        double PromoDiscount = applyPromo(finalTotal, PromocodeResponse);
+        finalTotal -= PromoDiscount;
+
+        displaySummary(PricePerNight, numNights, subtotal, discountAmount, PromoDiscount, finalTotal);
+        displayMessage(finalTotal);
+
+        cout << "Would you like to add another booking? (Y/N): ";
+        cin >> continueBooking;
+
+    } while (continueBooking == 'Y' || continueBooking == 'y');
+
+    cout << "Thank you for using FTMK GRAND HOTEL BOOKING SYSTEM.\n";
+    return 0;
+}
