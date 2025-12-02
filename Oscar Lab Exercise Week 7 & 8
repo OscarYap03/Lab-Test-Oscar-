@@ -11,53 +11,60 @@ void displayMessage(double finalTotal);
 void displaySummary(double PricePerNight, int numNights, double subtotal, double discountAmount, double PromoDiscount, double finalTotal);
 
 int main() {
-    int roomType;
-    int numNights;
-    char PromocodeResponse;
-    double PricePerNight = 0;
-    double subtotal;
-    double discountAmount = 0;
-    double finalTotal;
+    char continueBooking;
+    do {
+        int roomType;
+        int numNights;
+        char PromocodeResponse;
+        double PricePerNight = 0;
+        double subtotal;
+        double discountAmount = 0;
+        double finalTotal;
 
-    cout << "*****************************************\n";
-    cout << " FTMK GRAND HOTEL BOOKING SYSTEM \n";
-    cout << "*****************************************\n";
-    cout << "1. Standard Room - RM 150.00 per night\n";
-    cout << "2. Deluxe Room - RM 200.00 per night\n";
-    cout << "3. Suite Room - RM 300.00 per night\n";
-    cout << "Please Enter Room Type (1-3): ";
-    cin >> roomType;
+        cout << "*****************************************\n";
+        cout << " FTMK GRAND HOTEL BOOKING SYSTEM \n";
+        cout << "*****************************************\n";
+        cout << "1. Standard Room - RM 150.00 per night\n";
+        cout << "2. Deluxe Room - RM 200.00 per night\n";
+        cout << "3. Suite Room - RM 300.00 per night\n";
+        cout << "Please Enter Room Type (1-3): ";
+        cin >> roomType;
 
-    if (roomType < 1 || roomType > 3) {
-        cout << "Invalid input! Please Try Again.\n";
-        return 0;
-    }
+        if (roomType < 1 || roomType > 3) {
+            cout << "Invalid input! Please Try Again.\n";
+            return 0;
+        }
 
-    cout << "Please Enter Number Of Nights: ";
-    cin >> numNights;
+        cout << "Please Enter Number Of Nights: ";
+        cin >> numNights;
 
-    if (numNights <= 0) {
-        cout << "Invalid input! Please Try Again.\n";
-        return 0;
-    }
+        if (numNights <= 0) {
+            cout << "Invalid input! Please Try Again.\n";
+            return 0;
+        }
 
-    PricePerNight = getPrice(roomType);
-    cout << "You selected " << (roomType == 1 ? "Standard Room." : roomType == 2 ? "Deluxe Room." : "Suite Room.") << endl;
+        PricePerNight = getPrice(roomType);
+        cout << "You selected " << (roomType == 1 ? "Standard Room." : roomType == 2 ? "Deluxe Room." : "Suite Room.") << endl;
 
-    computeAmounts(PricePerNight, numNights, subtotal, discountAmount, finalTotal);
+        computeAmounts(PricePerNight, numNights, subtotal, discountAmount, finalTotal);
 
-    cout << "\n Do you have a Promo Code? (Y/N): ";
-    cin >> PromocodeResponse;
+        cout << "\n Do you have a Promo Code? (Y/N): ";
+        cin >> PromocodeResponse;
 
-    double PromoDiscount = applyPromo(finalTotal, PromocodeResponse);
-    finalTotal -= PromoDiscount;
+        double PromoDiscount = applyPromo(finalTotal, PromocodeResponse);
+        finalTotal -= PromoDiscount;
 
-    displaySummary(PricePerNight, numNights, subtotal, discountAmount, PromoDiscount, finalTotal);
-    displayMessage(finalTotal);
+        displaySummary(PricePerNight, numNights, subtotal, discountAmount, PromoDiscount, finalTotal);
+        displayMessage(finalTotal);
 
-    cout << "-----------------------------------------------------------------------------------\n";
+        cout << "Would you like to continue booking? (Y/N): ";
+        cin >> continueBooking;
+
+        cout << "-----------------------------------------------------------------------------------\n";
+    } while (continueBooking == 'Y' || continueBooking == 'y');
     return 0;
 }
+
 // Function returns the room's price per night.
 double getPrice(int roomType) {
     switch (roomType) {
@@ -83,7 +90,7 @@ double calculateDiscount(double subtotal, int numNights) {
     return subtotal * discountRate;
 }
 
-//C ompute subtotal, discount and after discount per nights
+// Compute subtotal, discount and after discount per night
 void computeAmounts(double PricePerNight, int numNights, double& subtotal, double& discountAmount, double& finalTotal) {
     subtotal = PricePerNight * numNights;
     discountAmount = calculateDiscount(subtotal, numNights);
@@ -123,5 +130,4 @@ void displaySummary(double PricePerNight, int numNights, double subtotal, double
     cout << "\n Final Total: RM " << finalTotal;
     cout << "\n-----------------------------------------------------------------------------------\n";
 }
-
 
